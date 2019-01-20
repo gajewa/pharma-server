@@ -1,0 +1,65 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+   http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="create-medicinal_product-table" author="Mateusz Gajewski-Tuttle">
+        <createTable tableName="medicinal_product">
+            <column autoIncrement="true" name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" primaryKeyName="pk_medicinal_product"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="common_name" type="VARCHAR(255)"/>
+            <column name="strength" type="VARCHAR(255)"/>
+            <column name="form" type="VARCHAR(255)"/>
+            <column name="type" type="VARCHAR(255)"/>
+            <column name="procedure_type" type="VARCHAR(255)"/>
+            <column name="permit_number" type="VARCHAR(255)"/>
+            <column name="permit_expiration_date" type="VARCHAR(255)"/>
+            <column name="atc_code" type="VARCHAR(255)"/>
+            <column name="producer_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create-producer-table" author="Mateusz Gajewski-Tuttle">
+        <createTable tableName="producer">
+            <column autoIncrement="true" name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" primaryKeyName="pk_producer"/>
+            </column>
+            <column name="name" type="TEXT"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create-package-table" author="Mateusz Gajewski-Tuttle">
+        <createTable tableName="package">
+            <column autoIncrement="true" name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" primaryKeyName="pk_package"/>
+            </column>
+            <column name="amount" type="varchar(255)"/>
+            <column name="unit" type="varchar(255)"/>
+            <column name="ean_code" type="varchar(255)"/>
+            <column name="availability_category" type="varchar(255)"/>
+            <column name="product_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="Mateusz Gajewski-Tuttle" id="product-producer-fk">
+        <addForeignKeyConstraint baseColumnNames="producer_id" baseTableName="medicinal_product" constraintName="producer-product-fk"
+                                 deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="producer"/>
+    </changeSet>
+
+    <changeSet author="Mateusz Gajewski-Tuttle" id="product-package-fk">
+        <addForeignKeyConstraint baseColumnNames="product_id" baseTableName="package" constraintName="package-product-fk"
+                                 deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="medicinal_product"/>
+    </changeSet>
+
+
+
+
+</databaseChangeLog>

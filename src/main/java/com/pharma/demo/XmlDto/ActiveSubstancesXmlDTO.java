@@ -8,7 +8,7 @@ import java.util.List;
 @XmlRootElement(name = "substancjeCzynne")
 public class ActiveSubstancesXmlDTO {
 
-    List<String> substances;
+    private List<String> substances;
 
     @XmlElement(name = "substancjaCzynna")
     public void setSubstances(List<String> substances){

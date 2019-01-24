@@ -59,6 +59,15 @@
                                  referencedColumnNames="id" referencedTableName="medicinal_product"/>
     </changeSet>
 
+    <changeSet id="create-table-active_substance" author="Mateusz Gajewski-Tuttle">
+        <createTable tableName="active_substance">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="pk_package"/>
+            </column>
+            <column type="varchar(255)" name="name"/>
+        </createTable>
+    </changeSet>
+
 
 
 

@@ -41,7 +41,7 @@ public class ProductController {
         List<MedicinalProduct> products = new ArrayList<>();
 
         long startTime = System.nanoTime();
-        for(int i=0; i<10; i++){
+        for(int i=0; i<1; i++){
             MedicinalProductXmlDto xml =  productParser.getParsedData().getMedicinalProducts().get(i);
             products.add(getProduct(xml));
         }

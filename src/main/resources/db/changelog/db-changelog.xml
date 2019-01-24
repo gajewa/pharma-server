@@ -48,13 +48,15 @@
     </changeSet>
 
     <changeSet author="Mateusz Gajewski-Tuttle" id="product-producer-fk">
-        <addForeignKeyConstraint baseColumnNames="producer_id" baseTableName="medicinal_product" constraintName="producer-product-fk"
+        <addForeignKeyConstraint baseColumnNames="producer_id" baseTableName="medicinal_product"
+                                 constraintName="producer-product-fk"
                                  deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
                                  referencedColumnNames="id" referencedTableName="producer"/>
     </changeSet>
 
     <changeSet author="Mateusz Gajewski-Tuttle" id="product-package-fk">
-        <addForeignKeyConstraint baseColumnNames="product_id" baseTableName="package" constraintName="package-product-fk"
+        <addForeignKeyConstraint baseColumnNames="product_id" baseTableName="package"
+                                 constraintName="package-product-fk"
                                  deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
                                  referencedColumnNames="id" referencedTableName="medicinal_product"/>
     </changeSet>
@@ -62,13 +64,36 @@
     <changeSet id="create-table-active_substance" author="Mateusz Gajewski-Tuttle">
         <createTable tableName="active_substance">
             <column name="id" type="BIGINT">
-                <constraints primaryKey="true" primaryKeyName="pk_package"/>
+                <constraints primaryKey="true" primaryKeyName="pk_substance"/>
             </column>
             <column type="varchar(255)" name="name"/>
         </createTable>
     </changeSet>
 
+    <changeSet id="create-table-medicinal_product_active_substances" author="Mateusz Gajewski-Tuttle">
+        <createTable tableName="medicinal_product_active_substances">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="pk_substance_product"/>
+            </column>
+            <column type="BIGINT" name="active_substance_id"/>
+            <column type="BIGINT" name="medicinal_product_id"/>
+        </createTable>
+    </changeSet>
 
+    <changeSet id="foreign-keys-active_substance-medicinal_product" author="Mateusz Gajewski-Tuttle">
+        <addForeignKeyConstraint constraintName="binding_active_substance_fk"
+                                 baseColumnNames="active_substance_id" baseTableName="medicinal_product_active_substances"
+                                 referencedColumnNames="id" referencedTableName="active_substance"
+                                 deferrable="false" initiallyDeferred="false" onDelete="NO ACTION"
+                                 onUpdate="NO ACTION"/>
+    </changeSet>
 
+    <changeSet id="foreign-keys-medicinal_product-active_substance" author="Mateusz Gajewski-Tuttle">
+        <addForeignKeyConstraint constraintName="binding_medicinal_product_fk"
+                                 baseColumnNames="medicinal_product_id" baseTableName="medicinal_product_active_substances"
+                                 referencedColumnNames="id" referencedTableName="medicinal_product"
+                                 deferrable="false" initiallyDeferred="false" onDelete="NO ACTION"
+                                 onUpdate="NO ACTION"/>
+    </changeSet>
 
 </databaseChangeLog>

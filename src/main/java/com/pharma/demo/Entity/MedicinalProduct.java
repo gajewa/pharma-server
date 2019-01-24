@@ -2,12 +2,15 @@ package com.pharma.demo.Entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Id;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Transient;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -18,6 +21,7 @@ import java.util.List;
 
 @Data
 @Entity
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class MedicinalProduct {
@@ -51,7 +55,12 @@ public class MedicinalProduct {
     @JoinColumn(name = "producer_id")
     private Producer producer;
 
-    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    @JoinTable(
+            name = "medicinal_product_active_substances",
+            joinColumns = { @JoinColumn(name = "medicinal_product_id")},
+            inverseJoinColumns = { @JoinColumn(name = "active_substance_id")}
+    )
     private List<ActiveSubstance> substances;
 
 }

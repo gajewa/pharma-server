@@ -4,19 +4,16 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
 
-import javax.persistence.CascadeType;
+import javax.persistence.Id;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
+import javax.persistence.Transient;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.Transient;
+import javax.persistence.JoinColumn;
+import javax.persistence.CascadeType;
+
 import java.util.List;
 
 @Data
@@ -54,7 +51,7 @@ public class MedicinalProduct {
     @JoinColumn(name = "producer_id")
     private Producer producer;
 
-    @Transient
-    private ActiveSubstances activeSubstances;
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private List<ActiveSubstance> substances;
 
 }

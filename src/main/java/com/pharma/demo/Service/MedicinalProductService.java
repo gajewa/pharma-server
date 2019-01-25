@@ -7,6 +7,8 @@ import com.pharma.demo.Repository.MedicinalProductRepository;
 import com.pharma.demo.XmlDto.MedicinalProductsXmlDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,23 +36,32 @@ public class MedicinalProductService {
         this.productParser = productParser;
     }
 
-    public List<MedicinalProduct> getProducts() {
-        return medicinalProductRepository.findAll();
+    public Page<MedicinalProduct> getProducts() {
+        return medicinalProductRepository.findAll(PageRequest.of(1, 50));
     }
 
     public void importProducts() throws JAXBException {
+        long startTimeOverall = System.nanoTime();
         long startTime = System.nanoTime();
         MedicinalProductsXmlDto xml = productParser.getParsedData();
         long timeInSeconds = (System.nanoTime() - startTime) / 1000000;
-        log.info("Import lasted {} seconds", timeInSeconds);
+        log.info("Parsing lasted {} milliseconds", timeInSeconds);
 
+        startTime = System.nanoTime();
         List<MedicinalProduct> products = xml.getMedicinalProducts()
-                .subList(0, 10)
+//                .subList(0, 10)
                 .stream()
                 .map(mapper::toEntity)
                 .collect(Collectors.toList());
+        timeInSeconds = (System.nanoTime() - startTime) / 1000000;
+        log.info("Mapping lasted {} milliseconds", timeInSeconds);
 
+        startTime = System.nanoTime();
         medicinalProductRepository.saveAll(products);
+        timeInSeconds = (System.nanoTime() - startTime) / 1000000;
+        log.info("Transaction lasted {} milliseconds", timeInSeconds);
+        long timeInSecondsOverAll = (System.nanoTime() - startTimeOverall) / 1000000;
+        log.info("Import process lasted {} milliseconds", timeInSecondsOverAll);
 
     }
 }

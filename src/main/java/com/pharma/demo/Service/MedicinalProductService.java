@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.xml.bind.JAXBException;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -29,15 +30,19 @@ public class MedicinalProductService {
     @Autowired
     public MedicinalProductService(
             PharmaObjectMapper mapper,
-            MedicinalProductRepository medicinalProductRepository,
-            ProductParser productParser) {
+            ProductParser productParser,
+            MedicinalProductRepository medicinalProductRepository) {
         this.mapper = mapper;
-        this.medicinalProductRepository = medicinalProductRepository;
         this.productParser = productParser;
+        this.medicinalProductRepository = medicinalProductRepository;
     }
 
     public Page<MedicinalProduct> getProducts(Pageable pageable) {
         return medicinalProductRepository.findAll(pageable);
+    }
+
+    public Optional<MedicinalProduct> getSingleProduct(Long id) {
+        return medicinalProductRepository.findById(id);
     }
 
     public void importProducts() throws JAXBException {
@@ -58,4 +63,5 @@ public class MedicinalProductService {
 
         medicinalProductRepository.saveAll(products);
     }
+
 }

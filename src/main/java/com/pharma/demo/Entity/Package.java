@@ -3,13 +3,17 @@ package com.pharma.demo.Entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.SortableField;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+@Data
 @Entity
 @Builder
 @NoArgsConstructor
@@ -19,12 +23,20 @@ public class Package {
     @Id
     private Long id;
 
+    @Field
+    @SortableField
     private String amount;
 
+    @Field
+    @SortableField
     private String unit;
 
+    @Field
+    @SortableField
     private String eanCode;
 
+    @Field
+    @SortableField
     private String availabilityCategory;
 
     @ManyToOne
@@ -32,51 +44,4 @@ public class Package {
     @JoinColumn(name = "product_id")
     private MedicinalProduct product;
 
-    public String getUnit() {
-        return unit;
-    }
-
-    public String getAvailabilityCategory() {
-        return availabilityCategory;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setUnit(String unit) {
-        this.unit = unit;
-    }
-
-    public String getAmount() {
-        return amount;
-    }
-
-    public void setAmount(String amount) {
-        this.amount = amount;
-    }
-
-    public String getEanCode() {
-        return eanCode;
-    }
-
-    public void setEanCode(String eanCode) {
-        this.eanCode = eanCode;
-    }
-
-    public void setAvailabilityCategory(String availabilityCategory) {
-        this.availabilityCategory = availabilityCategory;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public MedicinalProduct getProduct() {
-        return product;
-    }
-
-    public void setProduct(MedicinalProduct product) {
-        this.product = product;
-    }
 }

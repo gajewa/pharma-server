@@ -6,17 +6,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Id;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.Transient;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.JoinColumn;
-import javax.persistence.CascadeType;
-
 import java.util.List;
 
 @Data
@@ -55,7 +53,7 @@ public class MedicinalProduct {
     @JoinColumn(name = "producer_id")
     private Producer producer;
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinTable(
             name = "medicinal_product_active_substances",
             joinColumns = { @JoinColumn(name = "medicinal_product_id")},

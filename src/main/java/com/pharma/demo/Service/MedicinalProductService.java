@@ -41,7 +41,8 @@ public class MedicinalProductService {
     }
 
     public void importProducts() throws JAXBException {
-        long startTimeOverall = System.nanoTime();
+        log.info("Medicinal products import started.");
+
         long startTime = System.nanoTime();
         MedicinalProductsXmlDto xml = productParser.getParsedData();
         long timeInSeconds = (System.nanoTime() - startTime) / 1000000;

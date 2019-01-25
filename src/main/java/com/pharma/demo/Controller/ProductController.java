@@ -2,6 +2,7 @@ package com.pharma.demo.Controller;
 
 import com.pharma.demo.Service.MedicinalProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,8 +23,8 @@ public class ProductController {
     }
 
     @GetMapping
-    public ResponseEntity getProducts() throws JAXBException {
-        return ResponseEntity.ok(medicinalProductService.getProducts());
+    public ResponseEntity getProducts(Pageable pageable) throws JAXBException {
+        return ResponseEntity.ok(medicinalProductService.getProducts(pageable));
     }
 
     //temp for tests - later with scheduler

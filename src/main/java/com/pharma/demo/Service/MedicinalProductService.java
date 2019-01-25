@@ -49,19 +49,12 @@ public class MedicinalProductService {
 
         startTime = System.nanoTime();
         List<MedicinalProduct> products = xml.getMedicinalProducts()
-//                .subList(0, 10)
                 .stream()
                 .map(mapper::toEntity)
                 .collect(Collectors.toList());
         timeInSeconds = (System.nanoTime() - startTime) / 1000000;
         log.info("Mapping lasted {} milliseconds", timeInSeconds);
 
-        startTime = System.nanoTime();
         medicinalProductRepository.saveAll(products);
-        timeInSeconds = (System.nanoTime() - startTime) / 1000000;
-        log.info("Transaction lasted {} milliseconds", timeInSeconds);
-        long timeInSecondsOverAll = (System.nanoTime() - startTimeOverall) / 1000000;
-        log.info("Import process lasted {} milliseconds", timeInSecondsOverAll);
-
     }
 }

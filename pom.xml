@@ -54,8 +54,14 @@
 		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-search-orm -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-search-engine</artifactId>
+			<version>5.10.4.Final</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-search-orm</artifactId>
-			<version>5.11.0.Final</version>
+			<version>5.10.4.Final</version>
 		</dependency>
 
 

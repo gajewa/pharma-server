@@ -55,6 +55,7 @@ public class MedicinalProductService {
 
         startTime = System.nanoTime();
         List<MedicinalProduct> products = xml.getMedicinalProducts()
+                .subList(0, 10)
                 .stream()
                 .map(mapper::toEntity)
                 .collect(Collectors.toList());

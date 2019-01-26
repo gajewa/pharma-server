@@ -6,9 +6,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.SortableField;
-import org.springframework.stereotype.Indexed;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;

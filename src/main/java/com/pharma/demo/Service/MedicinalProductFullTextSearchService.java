@@ -3,7 +3,6 @@ package com.pharma.demo.Service;
 import com.pharma.demo.Entity.MedicinalProduct;
 import com.pharma.demo.Repository.MedicinalProductFullTextSearchRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.CacheMode;
 import org.hibernate.search.batchindexing.MassIndexerProgressMonitor;
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.Search;
@@ -35,15 +34,16 @@ public class MedicinalProductFullTextSearchService {
         MassIndexerProgressMonitor monitor = new LoggingProgressMonitor();
 
         long startTime = System.nanoTime();
-        fullTextEntityManager
-                .createIndexer(MedicinalProduct.class)
-                .batchSizeToLoadObjects(25)
-                .cacheMode(CacheMode.NORMAL)
-                .threadsToLoadObjects(12)
-                .idFetchSize(150)
-                .transactionTimeout(10)
-                .progressMonitor(monitor)
-                .startAndWait();
+        fullTextEntityManager.createIndexer(MedicinalProduct.class).startAndWait();
+//        fullTextEntityManager
+//                .createIndexer(MedicinalProduct.class)
+//                .batchSizeToLoadObjects(25)
+//                .cacheMode(CacheMode.NORMAL)
+//                .threadsToLoadObjects(12)
+//                .idFetchSize(150)
+//                .transactionTimeout(10)
+//                .progressMonitor(monitor)
+//                .startAndWait();
         long importTimeInSeconds = (System.nanoTime() - startTime) / 1000000;
         log.info("Hibernate Search indexing finished, Hibernate Search indexing lasted: {} ms", importTimeInSeconds);
 

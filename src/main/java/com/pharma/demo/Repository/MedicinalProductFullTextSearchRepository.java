@@ -77,7 +77,7 @@ public class MedicinalProductFullTextSearchRepository {
                 .wildcard()
                 .onFields(
                         "packages.unit",
-                        "availabilityCategory"
+                        "packages.availabilityCategory"
                 )
                 .andField("name").boostedTo(20)
                 .andField("commonName").boostedTo(20)
